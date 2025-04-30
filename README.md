@@ -25,3 +25,15 @@ This project demonstrates how to implement **JWT (JSON Web Token)** based authen
 
 ## 📁 Project Structure
 
+my-jwt-app/
+├── backend/
+│   ├── index.js             # Main server file
+│   ├── routes/
+│   │   └── auth.js          # Login and protected routes
+│   ├── middleware/
+│   │   └── verifyToken.js   # JWT verification logic
+│   ├── .env                 # Environment variables (JWT secret)
+│   └── package.json
+├── frontend/
+│   └── (Your frontend app, e.g., React code)
+└── README.md

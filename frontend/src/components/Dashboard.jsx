@@ -31,7 +31,7 @@ function Dashboard() {
     return (
         <div>
             <h1>{message}</h1>
-            {/* Add your dashboard content here */}
+            <p>This is a dashboard element</p>
         </div>
     );
 }

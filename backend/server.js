@@ -1,9 +1,11 @@
 import express from 'express';
 import cors from 'cors';
 import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
+dotenv.config();
 
 const app = express();
-const JWT_SECRET = 'hello';
+const JWT_SECRET = process.env.JWT_SECRET;
 
 app.use(express.json());
 app.use(cors());
@@ -18,11 +20,11 @@ app.get("/", (req, res) => {
 app.post("/login", (req, res) => {
     const { username, password } = req.body;
 
+    
     // Dummy check – replace with DB verification in real app
-    if (username === "admin" && password === "admin123") {
+    if (username === process.env.APP_USERNAME && password === process.env.APP_PASSWORD) {
         const payload = { username }; // Can include user ID, role, etc.
         const token = jwt.sign(payload, JWT_SECRET, { expiresIn: '15s' });
-
         res.json({ token });
     } else {
         res.status(401).json({ message: "Invalid credentials" });

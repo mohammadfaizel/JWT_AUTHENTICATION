@@ -1,11 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 function Login() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-    const navigate = useNavigate();  // For navigation after login success
+    const [isDarkMode, setIsDarkMode] = useState(false);
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (isDarkMode) {
+            document.body.classList.add("dark-mode");
+        } else {
+            document.body.classList.remove("dark-mode");
+        }
+    }, [isDarkMode]);
 
     async function handleSubmit() {
         const url = "http://localhost:3000/login";
@@ -13,10 +22,7 @@ function Login() {
             const response = await axios.post(url, { username, password });
             const token = response.data.token;
 
-            // Save token to localStorage
             localStorage.setItem("token", token);
-
-            // Navigate to the Dashboard component after successful login
             console.log("Token Stored");
             navigate("/dashboard");
             alert("Login Successful");
@@ -27,24 +33,30 @@ function Login() {
     }
 
     return (
-        <div>
-            <label>Username: </label>
+        <div className="container">
+            <h2 style={{ textAlign: 'center' }}>Login</h2>
+            <label htmlFor="username">Username</label>
             <input
                 type="text"
+                id="username"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
+                placeholder="Enter your username"
             />
-            <br />
-            <br />
-            <label>Password: </label>
+            <label htmlFor="password">Password</label>
             <input
                 type="password"
+                id="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                placeholder="Enter your password"
             />
-            <br />
-            <br />
             <button type="submit" onClick={handleSubmit}>Submit</button>
+            <div className="dark-mode-toggle">
+                <button onClick={() => setIsDarkMode(!isDarkMode)}>
+                    Toggle Dark Mode
+                </button>
+            </div>
         </div>
     );
 }
